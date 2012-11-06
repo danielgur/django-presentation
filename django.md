@@ -43,6 +43,8 @@ Now that we have the database setting complete, lets sync the database:
 
     python manage.py syncdb
 
+###Creating the Models
+
 Now, lets create an app. A project can have many apps.
 
     python manage.py startapp polls
@@ -94,6 +96,8 @@ So you noticed that Poll.objects.all() gives you: <<Poll: Poll object\> that is 
     def __unicode__(self):
         return self.title
 ```
+
+###Admin Features
 
 So now we have done too much backend stuff. Let us look at the admin features. Open up settings.py, and in INSTALLED_APPS, lets uncomment 'django.contrib.admin' and syncdb
 
