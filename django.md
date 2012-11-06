@@ -51,11 +51,22 @@ So that is pretty sweet, you just ran your first Django server! :)
 
 Open up mysite/settings.py. Find the DATABASE object, and we will use sqlite3 in this example.
 
-Lets make the following changes:
+Lets make the following changes to settings.py (2 options):
 
 ```python
-ENGINE = 'django.db.backends.sqlite3'
-NAME = 'absolute_path' 
+'ENGINE' = 'django.db.backends.sqlite3'
+'NAME' = '/Users/username/some/path/database.db' 
+```
+
+OR
+
+```python
+import os
+
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+...
+'ENGINE' = 'django.db.backends.sqlite3'
+'NAME' = os.path.join(SITE_ROOT, 'database.db'),
 ```
 
 Now that we have the database setting complete, lets sync the database:
