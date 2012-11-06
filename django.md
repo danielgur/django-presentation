@@ -1,18 +1,37 @@
 #Introduction to Django
 
-###Once you have Django installed, in terminal enter:
+##Installing Django
+
+###Mac/Unix
+1. Download [Django-1.4.2.tar.gz](https://www.djangoproject.com/download/1.4.2/tarball/)
+2. Run the following commands in terminal:
+
+```
+tar xzvf Django-1.4.2.tar.gz
+cd Django-1.4.2
+sudo python setup.py install
+```
+
+###PC
+
+
+##Once you have Django installed
+
+###Creating your first project
+
+in terminal enter:
 
     django-admin.py startproject mysite
 
 This will create a my site directory in your current directory. In the my site directory, the following has been created:
 
     mysite/
-    manage.py
+        manage.py
         mysite/
-        __init__.py
-        settings.py
-        urls.py
-        wsgi.py
+            __init__.py
+            settings.py
+            urls.py
+            wsgi.py
 
 To run your Django server, enter the following in your my site folder:
 
@@ -93,13 +112,24 @@ Lets play with the python shell:
 So you noticed that Poll.objects.all() gives you: <<Poll: Poll object\> that is not helpful. >To fix this issue, we can add something to our models.py class. 
 
 ```python
-    def __unicode__(self):
-        return self.title
+def __unicode__(self):
+    return self.title
 ```
 
 ###Admin Features
 
-So now we have done too much backend stuff. Let us look at the admin features. Open up settings.py, and in INSTALLED_APPS, lets uncomment 'django.contrib.admin' and syncdb
+So now we have done too much backend stuff. Let us look at the admin features. There are three steps needed:
+
+1. Open up settings.py, and in INSTALLED_APPS, and uncomment 'django.contrib.admin'  
+2. Run 'pyton manage.py syncdb'
+3. In mysite/urls.py, uncomment the following 3 lines:
+    
+```python
+from django.contrib import admin
+admin.autodiscover()
+...
+url(r'^admin/', include(admin.site.urls)),
+```
 
 
 
