@@ -212,7 +212,7 @@ from hacksu.models import Member, Project
 def index(request):
     members = Member.objects.all()
     projects = Project.objects.all()
-    return render_to_response('hacksu/index.html', {'members': members, 'projects'})
+    return render_to_response('hacksu/index.html', {'members': members, 'projects': projects})
 ```
 
 We also need to create the html file, and link it up. So lets open up settings.py and set the TEMPLATE_DIRS
