@@ -2,18 +2,7 @@
 
 ##Installing Django
 
-###Mac/Unix
-1. Download [Django-1.4.2.tar.gz](https://www.djangoproject.com/download/1.4.2/tarball/)
-2. Run the following commands in terminal:
-
-```
-tar xzvf Django-1.4.2.tar.gz
-cd Django-1.4.2
-sudo python setup.py install
-```
-
-###PC
-
+Instructions can be found [here.](https://github.com/hacKSU/django-presentation#readme)
 
 ##Once you have Django installed
 
@@ -141,6 +130,33 @@ admin.autodiscover()
 ...
 url(r'^admin/', include(admin.site.urls)),
 ```
+
+Now, run the server, by entering the following in terminal:
+
+    python manage.py runserver
+
+Visit: http://127.0.0.1:8000/admin/ and enter the admin username and password.
+
+That is awesome, right. But you will see, Auth and Sites. Would you like to see your data models there too?
+
+Ok, so lets open /polls/admin.py and add the following:
+
+```python
+from polls.models import Poll, Choice
+from django.contrib import admin
+
+admin.site.register(Poll)
+admin.site.register(Choice)
+```
+
+This tells Django to add your models to the admin interface. 
+
+To customize the template look and feel, go [here](https://docs.djangoproject.com/en/1.4/intro/tutorial02/#customize-the-admin-look-and-feel)
+
+
+
+
+
 
 
 
