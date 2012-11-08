@@ -222,3 +222,34 @@ TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, 'templates'),
 )
 ```
+
+Lets create a templates folder in mysite, and create an index.html file inside there. 
+
+Then inside that html file we can access our model objects and can embed python code :)
+
+```html
+<!DOCTYPE html>
+    <head>
+        <title>hacKSU Members</title>
+    </head>
+    <body>
+        {{ for member in members }}
+            <p>{{ member.name }}</p>
+            <p>{{ member.email }}</p>
+            <p>{{ member.join_date }}</p>
+        {{ endfor }}
+
+        {{ if not members }}
+            No members!
+        {{ endif }}
+    </body>
+</html>
+```
+
+###Get your app on Heroku!
+
+Download and install Heroku, then launch your app from terminal:
+
+1. heroku create
+2. git push heroku master
+3. heroku open
