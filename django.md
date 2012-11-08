@@ -194,8 +194,31 @@ To customize the template look and feel, go [here](https://docs.djangoproject.co
 
 ###Designing the URL's
 
-In mysite/urls.py
+In mysite/urls.py add the following: 
 
+```python
+#...
+urlpatterns += patterns('hacksu.views',
+    url(r'^$', 'index'),
+)
+```
 
+That tells the server, that when someone requests root, they will be forwarded to index of our hacksu views. We need to add the functionailty there, so lets open hacksu/views.py
 
+```python
+from django.shortcuts import render_to_response
+from hacksu.models import Member, Project
 
+def index(request):
+    members = Member.objects.all()
+    projects = Project.objects.all()
+    return render_to_response('hacksu/index.html', {'members': members, 'projects'})
+```
+
+We also need to create the html file, and link it up. So lets open up settings.py and set the TEMPLATE_DIRS
+    
+```python    
+TEMPLATE_DIRS = (
+    os.path.join(SITE_ROOT, 'templates'),
+)
+```
