@@ -43,8 +43,8 @@ Open up mysite/settings.py. Find the DATABASE object, and we will use sqlite3 in
 Lets make the following changes to settings.py (2 options):
 
 ```python
-'ENGINE' = 'django.db.backends.sqlite3'
-'NAME' = '/Users/username/some/path/database.db' 
+'ENGINE' = 'django.db.backends.sqlite3',
+'NAME' = '/Users/username/some/path/database.db', 
 ```
 
 OR
@@ -54,7 +54,7 @@ import os
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 ...
-'ENGINE' = 'django.db.backends.sqlite3'
+'ENGINE' = 'django.db.backends.sqlite3',
 'NAME' = os.path.join(SITE_ROOT, 'database.db'),
 ```
 
@@ -66,11 +66,11 @@ Now that we have the database setting complete, lets sync the database:
 
 Now, lets create an app. A project can have many apps.
 
-    python manage.py startapp polls
+    python manage.py startapp hacksu
 
 The following directory will be created:
 
-    polls/
+    hacksu/
         __init__.py
         models.py
         tests.py
@@ -81,21 +81,23 @@ Lets give our app some models, open up the models.py file and add the following:
 ```python
 from django.db import models
 
-class Poll(models.Model): 
-    question = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+class Member(models.Model): 
+    name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    join_date = models.DateTimeField()
 
-class Choice(models.Model):
-    poll = models.ForeignKey(Poll) 
-    choice = models.CharField(max_length=200)
-    votes = models.IntegerField()
+class Project(models.Model):
+    name = models.CharField(max_length=200) 
+    url = models.CharField(max_length=200)
+    description = models.CharField(max_length=200)
+    members = models.ManyToManyField(Member)
 ```
 
-Cool, so you have created two models, now to link them. In settings.py, let's add 'polls' to INSTALLED_APPS
+Cool, so you have created two models, now to link them. In settings.py, let's add 'hacksu' to INSTALLED_APPS in settings.py
 
 Awesome. So now lets tell Django to include our app. 
 
-    python manage.py sql polls
+    python manage.py sql hacksu
 
 Now you will see the two create tables commands. That is super awesome. You never need to create a database manually again =)
 
@@ -107,7 +109,44 @@ Lets play with the python shell:
 
     python manage.py shell
 
-….
+Lets create a member:
+
+    >>> from hacksu.models import Member
+
+    >>> Members.objects.all()
+    []
+
+    >>> from django.utils import timezone
+    
+    >>> m = Member(name="Dawe", email="some@one.com", join_date=timezone.now())
+
+    >> m.save()
+
+    >> Members.objects.all()
+
+    [<Member: Member object>]
+    
+    # That is not cool!
+
+Lets fix our models, so that they give us human readable info. In hacksu/models.py
+
+    class Member(models.Model):
+        # ...
+        def __unicode__(self):
+            return self.name
+
+    class Project(models.Model):
+        # ...
+        def __unicode__(self):
+            return self.name
+
+Lets hop back into the django shell, and type:
+
+    >>> from hacksu.models import Member
+
+    >>> Member.objects.all()
+
+    [<Member: Dawe>]
 
 So you noticed that Poll.objects.all() gives you: <<Poll: Poll object\> that is not helpful. >To fix this issue, we can add something to our models.py class. 
 
@@ -153,9 +192,9 @@ This tells Django to add your models to the admin interface.
 
 To customize the template look and feel, go [here](https://docs.djangoproject.com/en/1.4/intro/tutorial02/#customize-the-admin-look-and-feel)
 
+###Designing the URL's
 
-
-
+In mysite/urls.py
 
 
 
